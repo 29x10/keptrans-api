@@ -1,7 +1,0 @@
-[buildout]
-parts = cornice
-
-[cornice]
-recipe = zc.recipe.egg
-eggs = cornice
-dependent-scripts = true
