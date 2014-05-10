@@ -44,9 +44,9 @@ def convert_to_ember_data_array(couch_data, name):
 def convert_to_ember_data_single(couch_data, name):
     payload = {name: {}}
     if couch_data[u'rows']:
-        couch_data[u'rows'][u'value'][u'id'] = couch_data[u'rows'][u'value'][u'_id']
-        del couch_data[u'rows'][u'value'][u'_id']
-        payload[name] = couch_data[u'rows'][u'value']
+        couch_data[u'rows'][0][u'value'][u'id'] = couch_data[u'rows'][0][u'value'][u'_id']
+        del couch_data[u'rows'][0][u'value'][u'_id']
+        payload[name] = couch_data[u'rows'][0][u'value']
     return payload
 
 
