@@ -1,24 +1,28 @@
 from couchdb.design import ViewDefinition
-from couchdb.mapping import TextField, IntegerField, ListField, Document
+from couchdb.mapping import TextField, IntegerField, ListField, Document, DictField, Mapping
 
 
 class Product(Document):
     db_type = TextField(default='product')
     brand = TextField()
-    spec = TextField()
     category = TextField()
-    price = IntegerField()
-    desc = TextField()
+    spec = TextField()
     cover = TextField()
+    desc = TextField()
+    rows = ListField(DictField(Mapping.build(
+        spec=TextField(),
+        price=IntegerField(),
+        image=TextField()
+    )))
 
     def __init__(self, product):
         super(Product, self).__init__()
         self.brand = product['brand']
-        self.spec = product['spec']
         self.category = product['category']
-        self.price = product['price']
-        self.desc = product['desc']
+        self.spec = product['spec']
         self.cover = product['cover']
+        self.desc = product['desc']
+        self.rows = product['rows']
 
     product_list = ViewDefinition('products', 'product_list', '''
         function (doc) {
