@@ -1,5 +1,6 @@
 """Main entry point
 """
+from cornice.validators import DEFAULT_FILTERS
 from couchdb.client import Server
 from pyramid.config import Configurator
 from pyramid.events import NewRequest
@@ -22,6 +23,7 @@ def main(global_config, **settings):
     upyun_server = UpYun(settings['upyun.space'], settings['upyun.username'], settings['upyun.password'], timeout=30, endpoint=ED_AUTO)
     config.registry.settings['UpYun.server'] = upyun_server
     config.add_subscriber(add_couchdb_to_request, NewRequest)
+    DEFAULT_FILTERS.pop()
     config.include("cornice")
     config.scan("api.views")
     return config.make_wsgi_app()
