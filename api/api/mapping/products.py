@@ -12,6 +12,8 @@ class Product(Document):
     rows = ListField(DictField(Mapping.build(
         spec=TextField(),
         price=IntegerField(),
+        amount=IntegerField(),
+        dtime=IntegerField(),
         image=TextField()
     )))
 

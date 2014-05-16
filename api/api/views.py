@@ -65,7 +65,11 @@ product_add_error = {
     'priceNotNumber': u'价格必须是数字，单位是分',
     'descNone': u'描述随便写点什么把',
     'coverNone': u'封面是脸面',
-    'imageNone': u'产品图片不能少'
+    'imageNone': u'产品图片不能少',
+    'amountNone': u'库存数量不能为空',
+    'amountNotNumber': u'库存数量必须为数字',
+    'dtimeNone': u'货期不能为空',
+    'dtimeNotNumber': u'货期必须为数字，单位是天'
 }
 
 
@@ -84,8 +88,9 @@ def validate_product(request):
                 else:
                     request.errors.add('body', error_name, product_add_error[error_name + 'None'])
             elif 'not a number' in error_value:
-                index, error_name = error_name.split(".")[1:]
-                request.errors.add('body', error_name, product_add_error[error_name + 'NotNumber'])
+                if 'rows' in error_name:
+                    index, error_name = error_name.split(".")[1:]
+                    request.errors.add('body', error_name, "#" + index + product_add_error[error_name + 'NotNumber'])
 
 
 @products.post(content_type="application/json", validators=validate_product)

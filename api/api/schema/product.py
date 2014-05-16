@@ -4,6 +4,8 @@ import colander
 class Product(colander.MappingSchema):
     spec = colander.SchemaNode(colander.String())
     price = colander.SchemaNode(colander.Integer())
+    amount = colander.SchemaNode(colander.Integer())
+    dtime = colander.SchemaNode(colander.Integer())
     image = colander.SchemaNode(colander.String())
 
 
