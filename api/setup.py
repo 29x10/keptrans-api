@@ -26,7 +26,7 @@ setup(name='api',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['cornice', 'waitress', 'couchdb', 'colander', 'upyun', 'requests'],
+    install_requires=['cornice', 'waitress', 'pymongo', 'upyun', 'requests'],
     entry_points = """\
     [paste.app_factory]
     main = api:main

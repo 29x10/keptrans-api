@@ -1,19 +1,18 @@
 #coding:utf-8
+import ast
 from cgi import FieldStorage
 import json
 from uuid import uuid4
-from schema.product import ProductSchema
-import colander
-from mapping.products import Product
+from bson.json_util import dumps, loads
 
-from cornice import Service, validators
+from cornice import Service
 from webob import exc
 from webob.response import Response
-from couchdb.json import encode as couchdb_json_encode
 
-products = Service(name='products', path='/products', description="products", cors_origins=('*',))
+products_master = Service(name='products', path='/productMasters', description="products master", cors_origins=('*',))
+products_tags = Service(name='products', path='/productTags', description="products master tag", cors_origins=('*',))
 product = Service(name='product', path='/products/{product_id}', description="product detail", cors_origins=('*',))
-image = Service(name='image', path='/image', description="upload image", cors_origins=('*',))
+image = Service(name='image', path='/image', description="upload image", cors_origins=('*.keptrans.com',))
 
 
 class UnauthorizedView(exc.HTTPError):
@@ -73,84 +72,93 @@ product_add_error = {
 }
 
 
-def validate_product(request):
-    try:
-        schema = ProductSchema()
-        new_product = schema.deserialize(request.json_body['product'])
-        request.validated['product'] = new_product
-    except colander.Invalid, e:
-        errors = e.asdict()
-        for error_name, error_value in errors.items():
-            if error_value == 'Required':
-                if 'rows' in error_name:
-                    index, error_name = error_name.split(".")[1:]
-                    request.errors.add('body', error_name, "#" + index + product_add_error[error_name + 'None'])
-                else:
-                    request.errors.add('body', error_name, product_add_error[error_name + 'None'])
-            elif 'not a number' in error_value:
-                if 'rows' in error_name:
-                    index, error_name = error_name.split(".")[1:]
-                    request.errors.add('body', error_name, "#" + index + product_add_error[error_name + 'NotNumber'])
+# def validate_product(request):
+#     try:
+#         schema = ProductSchema()
+#         new_product = schema.deserialize(request.json_body['product'])
+#         request.validated['product'] = new_product
+#     except colander.Invalid, e:
+#         errors = e.asdict()
+#         for error_name, error_value in errors.items():
+#             if error_value == 'Required':
+#                 if 'rows' in error_name:
+#                     index, error_name = error_name.split(".")[1:]
+#                     request.errors.add('body', error_name, "#" + index + product_add_error[error_name + 'None'])
+#                 else:
+#                     request.errors.add('body', error_name, product_add_error[error_name + 'None'])
+#             elif 'not a number' in error_value:
+#                 if 'rows' in error_name:
+#                     index, error_name = error_name.split(".")[1:]
+#                     request.errors.add('body', error_name, "#" + index + product_add_error[error_name + 'NotNumber'])
 
 
-@products.post(content_type="application/json", validators=validate_product)
+def validate_product_master(request):
+    product = request.json_body['productMaster']
+
+@products_master.post(content_type="application/json", validators=validate_product_master)
 def add_product(request):
-    product = request.validated['product']
-    new_product = Product(product)
+    return {'product': True}
+
+
+@products_tags.post(content_type="application/json")
+def add_tag(request):
+    tag = request.json_body['productTag']
     db = request.db
-    result = new_product.store(db)
-    product['id'] = result.id
-    return {'product': product}
+    result = db['product_tag'].find_and_modify(query={'name': tag['name']}, upsert=True, update={'$setOnInsert': {'name': tag['name']}}, new=True)
+    result['id'] = str(result['_id'])
+    del result['_id']
+    return {'product_tag': result}
 
-@products.get()
-def get_products(request):
-    db = request.db
-    result = db.resource('_design', 'products', '_view', 'product_list').get_json()[2]
-    return convert_to_ember_data_array(result, 'products')
-
-
-@image.post()
-def upload_image(request):
-    up = request.up
-    for file_type, file_wrapper in request.params.items():
-        if isinstance(file_wrapper, FieldStorage):
-            file_ext = '.' + file_wrapper.type.split('/')[-1]
-            image_url = '/products/' + uuid4().hex + file_ext
-            up.put(image_url, file_wrapper.file, checksum=True)
-            return {'image': image_url}
-    return {'error': True}
-
-
-def product_exists(request):
-    product_id = request.matchdict['product_id']
-    db = request.db
-    result = db.resource('_design', 'products', '_view', 'product_list').get_json(key=couchdb_json_encode(product_id))[2]
-    if not result['rows']:
-        request.errors.add('body', product_id, u'产品不存在')
-        request.errors.status = 404
-    else:
-        request.validated['result'] = result
-
-
-@product.get(validators=product_exists)
-def get_product(request):
-    product = request.validated['result']
-    return convert_to_ember_data_single(product, 'product')
-
-
-@product.put(validators=(product_exists, validate_product))
-def update_product(request):
-    product = request.validated['result']['rows'][0]
-    new_product = request.validated['product']
-    new_product['_rev'] = product['value']['_rev']
-    new_product['db_type'] = 'product'
-    db = request.db
-    result = db.resource(request.matchdict['product_id']).put_json(body=new_product)
-    return {'product': new_product}
-
-@product.delete(validators=(product_exists,))
-def delete_product(request):
-    product = request.validated['result']
-    db = request.db
-    db.resource(request.matchdict['product_id']).delete_json(rev=product['rows'][0]['value']['_rev'])
-    return convert_to_ember_data_single(product, 'product')
+# @products.get()
+# def get_products(request):
+#     db = request.db
+#     result = db.resource('_design', 'products', '_view', 'product_list').get_json()[2]
+#     return convert_to_ember_data_array(result, 'products')
+#
+#
+# @image.post()
+# def upload_image(request):
+#     up = request.up
+#     for file_type, file_wrapper in request.params.items():
+#         if isinstance(file_wrapper, FieldStorage):
+#             file_ext = '.' + file_wrapper.type.split('/')[-1]
+#             image_url = '/products/' + uuid4().hex + file_ext
+#             up.put(image_url, file_wrapper.file, checksum=True)
+#             return {'image': image_url}
+#     return {'error': True}
+#
+#
+# def product_exists(request):
+#     product_id = request.matchdict['product_id']
+#     db = request.db
+#     result = db.resource('_design', 'products', '_view', 'product_list').get_json(key=couchdb_json_encode(product_id))[2]
+#     if not result['rows']:
+#         request.errors.add('body', product_id, u'产品不存在')
+#         request.errors.status = 404
+#     else:
+#         request.validated['result'] = result
+#
+#
+# @product.get(validators=product_exists)
+# def get_product(request):
+#     product = request.validated['result']
+#     return convert_to_ember_data_single(product, 'product')
+#
+#
+# @product.put(validators=(product_exists, validate_product))
+# def update_product(request):
+#     product = request.validated['result']['rows'][0]
+#     new_product = request.validated['product']
+#     new_product['_rev'] = product['value']['_rev']
+#     new_product['db_type'] = 'product'
+#     db = request.db
+#     result = db.resource(request.matchdict['product_id']).put_json(body=new_product)
+#     return {'product': new_product}
+#
+# @product.delete(validators=(product_exists,))
+# def delete_product(request):
+#     product = request.validated['result']
+#     db = request.db
+#     db.resource(request.matchdict['product_id']).delete_json(rev=product['rows'][0]['value']['_rev'])
+#     return convert_to_ember_data_single(product, 'product')
+#
