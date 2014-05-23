@@ -10,7 +10,7 @@ from webob import exc
 from webob.response import Response
 
 products_master = Service(name='products', path='/productMasters', description="products master", cors_origins=('*',))
-products_tags = Service(name='products', path='/productTags', description="products master tag", cors_origins=('*',))
+products_tags = Service(name='products', path='/product_tags', description="products master tag", cors_origins=('*',))
 product = Service(name='product', path='/products/{product_id}', description="product detail", cors_origins=('*',))
 image = Service(name='image', path='/image', description="upload image", cors_origins=('*.keptrans.com',))
 
@@ -102,7 +102,7 @@ def add_product(request):
 
 @products_tags.post(content_type="application/json")
 def add_tag(request):
-    tag = request.json_body['productTag']
+    tag = request.json_body['product_tag']
     db = request.db
     result = db['product_tag'].find_and_modify(query={'name': tag['name']}, upsert=True, update={'$setOnInsert': {'name': tag['name']}}, new=True)
     result['id'] = str(result['_id'])
