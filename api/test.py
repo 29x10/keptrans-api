@@ -1,14 +1,22 @@
 #coding:utf-8
-from api.mapping.products import Product
-from couchdb.client import Server
+import colander
 
 __author__ = 'binlei'
 
-server = Server("http://admin:qweasdzxc@localhost:5984/")
-db = server['keptrans']
-# result = db.view('products/product_list')
-result = db.resource('_design', 'products', '_view', 'product_list').get_json()[2]['rows']
 
-for k in result:
-    print k['value']
+
+
+
+class Tag(colander.SequenceSchema):
+    id = colander.SchemaNode(colander.String())
+
+class ProductMasterSchema(colander.MappingSchema):
+    tags = Tag()
+
+
+schema = ProductMasterSchema()
+result = schema.deserialize({'tags': 123})
+print result
+
+
 
