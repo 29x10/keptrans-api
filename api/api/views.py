@@ -159,10 +159,10 @@ def update_product_master(request):
     db = request.db
     result = db['product_master'].find_and_modify(query={"_id": master_id}, update=new_product_master, new=True)
     for i in range(len(result['tags'])):
-        new_product_master['tags'][i] = str(new_product_master['tags'][i].id)
-    new_product_master['id'] = str(new_product_master['_id'])
-    del new_product_master['_id']
-    return {'productMaster': new_product_master}
+        result['tags'][i] = str(result['tags'][i].id)
+    result['id'] = str(result['_id'])
+    del result['_id']
+    return {'productMaster': result}
 
 
 @product_master.delete()
