@@ -7,7 +7,7 @@ class Tag(colander.SequenceSchema):
 
 class ProductMasterSchema(colander.MappingSchema):
     brand = colander.SchemaNode(colander.String())
-    category = colander.SchemaNode(colander.String)
+    category = colander.SchemaNode(colander.String())
     cover = colander.SchemaNode(colander.String())
     desc = colander.SchemaNode(colander.String())
     tags = Tag()

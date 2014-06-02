@@ -2,6 +2,7 @@
 from cgi import FieldStorage
 import json
 from uuid import uuid4
+from schema.product_master import ProductMasterSchema
 from schema.product_image import ProductImageSchema
 from schema.product_tag import ProductTagSchema
 from bson.dbref import DBRef
@@ -13,14 +14,25 @@ from cornice import Service
 from webob import exc
 from webob.response import Response
 
-products_masters = Service(name='product_master', path='/productMasters', description="products master",
+product_masters = Service(name='product_masters', path='/productMasters', description="products master",
                           cors_origins=('*',))
-products_tags = Service(name='products_tags', path='/productTags', description="products master tag",
+product_master = Service(name='product_master', path='/productMasters/{master_id}', description="product master",
+                          cors_origins=('*',))
+
+
+product_tags = Service(name='products_tags', path='/productTags', description="products master tag",
                         cors_origins=('*',))
+
+
 products = Service(name='products', path='/products', description="products", cors_origins=('*',))
 product = Service(name='product', path='/products/{product_id}', description="product detail", cors_origins=('*',))
+
+
 image = Service(name='image', path='/image', description="upload image", cors_origins=('*',))
-product_images = Service(name='product_image', path='/productImages', description='product image', cors_origins=('*',))
+
+
+product_images = Service(name='product_images', path='/productImages', description='product images', cors_origins=('*',))
+product_image = Service(name='product_image', path='/productImages/{image_id}', description='product image', cors_origins=('*',))
 
 
 
@@ -58,7 +70,6 @@ class NotFoundView(exc.HTTPError):
         self.content_type = 'application/json'
 
 
-
 product_master_error = {
     'brandNone': u'品牌不能为空',
     'categoryNone': u'所属类目不能为空',
@@ -70,8 +81,8 @@ product_master_error = {
 
 def validate_product_master(request):
     try:
-        schema = ProductSchema()
-        new_product = schema.deserialize(request.json_body['product'])
+        schema = ProductMasterSchema()
+        new_product = schema.deserialize(request.json_body['productMaster'])
         request.validated['productMaster'] = new_product
     except colander.Invalid as e:
         errors = e.asdict()
@@ -84,8 +95,7 @@ def validate_product_master(request):
         request.errors.add('body', 'unhandled_error', e.message)
 
 
-
-@products_masters.post(content_type="application/json", validators=(validate_product_master,))
+@product_masters.post(content_type="application/json", validators=(validate_product_master,))
 def add_product_master(request):
     new_product_master = request.validated['productMaster']
     for i in range(len(new_product_master['tags'])):
@@ -97,6 +107,75 @@ def add_product_master(request):
     new_product_master['id'] = str(new_product_master['_id'])
     del new_product_master['_id']
     return {'productMaster': new_product_master}
+
+
+@product_masters.get()
+def get_all_product_master(request):
+    db = request.db
+    tags_list = []
+    products_list = []
+    images_list = []
+
+    master_list = []
+
+
+    for master in db['product_master'].find():
+        tag_id_list = []
+        for tag in master['tags']:
+            tag = db.dereference(tag)
+            tag['id'] = str(tag['_id'])
+            del tag['_id']
+            tag_id_list.append(tag['id'])
+            tags_list.append(tag)
+        master['tags'] = tag_id_list
+        product_id_list = []
+        for pro in db['product'].find({'productMaster.$id': master['_id']}):
+            pro['id'] = str(pro['_id'])
+            del pro['_id']
+            del pro['productMaster']
+            product_id_list.append(pro['id'])
+            products_list.append(pro)
+        master['products'] = product_id_list
+        image_id_list = []
+        for img in db['product_image'].find({'productMaster.$id': master['_id']}):
+            img['id'] = str(img['_id'])
+            del img['_id']
+            del img['productMaster']
+            image_id_list.append(img['id'])
+            images_list.append(img)
+        master['images'] = image_id_list
+        master['id'] = str(master['_id'])
+        del master['_id']
+        master_list.append(master)
+    return {'productMasters': master_list, 'productTags': tags_list, 'productImages': images_list, 'products': products_list}
+
+
+@product_master.put(content_type="application/json", validators=(validate_product_master,))
+def update_product_master(request):
+    master_id = ObjectId(request.matchdict['master_id'])
+    new_product_master = request.validated['productMaster']
+    for i in range(len(new_product_master['tags'])):
+        new_product_master['tags'][i] = DBRef('product_tag', ObjectId(new_product_master['tags'][i]))
+    db = request.db
+    result = db['product_master'].find_and_modify(query={"_id": master_id}, update=new_product_master, new=True)
+    for i in range(len(result['tags'])):
+        new_product_master['tags'][i] = str(new_product_master['tags'][i].id)
+    new_product_master['id'] = str(new_product_master['_id'])
+    del new_product_master['_id']
+    return {'productMaster': new_product_master}
+
+
+@product_master.delete()
+def delete_product_master(request):
+    master_id = request.matchdict['master_id']
+    master_oid = ObjectId(master_id)
+    db = request.db
+    for pro in db['product'].find({'productMaster.$id': master_oid}):
+        db['product'].remove({'_id': pro['_id']})
+    for img in db['product_image'].find({'productMaster.$id': master_oid}):
+        db['product_image'].remove({'_id': img['_id']})
+    db['product_master'].remove({'_id': master_oid})
+    return {'productMaster': {'id': master_id}}
 
 
 def validate_product_tag(request):
@@ -115,7 +194,7 @@ def validate_product_tag(request):
         request.errors.add('body', 'unhandled_error', e.message)
 
 
-@products_tags.post(content_type="application/json", validators=(validate_product_tag,))
+@product_tags.post(content_type="application/json", validators=(validate_product_tag,))
 def add_tag(request):
     new_tag = request.validated['tag']
     db = request.db
@@ -135,7 +214,7 @@ product_error = {
     'skuNone': u'库存数不能为空',
     'skuNotNumber': u'库存数量不能为空',
     'unitNone': u'库存单位不能为空',
-    'productMaster': u'所属系列不能为空'
+    'productMasterNone': u'所属系列不能为空'
 }
 
 
@@ -172,12 +251,15 @@ def add_product(request):
 @product.put(content_type="application/json", validators=(validate_product,))
 def update_product(request):
     product_id = ObjectId(request.matchdict['product_id'])
-    product = request.validated['product']
+    new_product = request.validated['product']
+    new_product['productMaster'] = DBRef('product_master', ObjectId(new_product['productMaster']))
     db = request.db
-    result = db['product'].find_and_modify(query={"_id": product_id}, update=product, new=True)
+    result = db['product'].find_and_modify(query={"_id": product_id}, update=new_product, new=True)
+    result['productMaster'] = str(result['productMaster'].id)
     result['id'] = str(result['_id'])
     del result['_id']
     return {'product': result}
+
 
 @product.delete()
 def delete_product(request):
@@ -192,6 +274,7 @@ product_image_error = {
     'urlNone': u'封面地址不能为空',
     'productMasterNone': u'所属系列不能为空'
 }
+
 
 def validate_product_image(request):
     try:
@@ -209,9 +292,9 @@ def validate_product_image(request):
         request.errors.add('body', 'unhandled_error', e.message)
 
 
-@product_images.post()
-def add_image(request):
-    new_image = request.json_body['productImage']
+@product_images.post(content_type="application/json", validators=(validate_product_image,))
+def add_product_image(request):
+    new_image = request.validated['image']
     new_image['productMaster'] = DBRef('product_master', ObjectId(new_image['productMaster']))
     db = request.db
     db['product_image'].insert(new_image)
@@ -219,3 +302,25 @@ def add_image(request):
     new_image['id'] = str(new_image['_id'])
     del new_image['_id']
     return {'productImage': new_image}
+
+
+@product_image.put(content_type="application/json", validators=(validate_product_image,))
+def update_product_image(request):
+    image_id = ObjectId(request.matchdict['image_id'])
+    new_image = request.validated['image']
+    new_image['productMaster'] = DBRef('product_master', ObjectId(new_image['productMaster']))
+    db = request.db
+    result = db['product_image'].find_and_modify(query={"_id": image_id}, update=new_image, new=True)
+    result['productMaster'] = str(result['productMaster'].id)
+    result['id'] = str(result['_id'])
+    del result['_id']
+    return {'productImage': result}
+
+
+@product_image.delete()
+def delete_product_image(request):
+    image_id = request.matchdict['image_id']
+    image_oid = ObjectId(image_id)
+    db = request.db
+    db['product_image'].remove({"_id": image_oid})
+    return {'product': {'id': image_id}}
