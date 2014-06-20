@@ -5,6 +5,7 @@ import colander
 class Tag(colander.SequenceSchema):
     id = colander.SchemaNode(colander.String())
 
+
 class ProductMasterSchema(colander.MappingSchema):
     brand = colander.SchemaNode(colander.String())
     category = colander.SchemaNode(colander.String())

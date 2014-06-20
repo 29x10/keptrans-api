@@ -26,7 +26,7 @@ setup(name='api',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['cornice', 'waitress', 'pymongo', 'upyun', 'requests', 'colander'],
+    install_requires=['cornice', 'waitress', 'pymongo', 'upyun', 'requests', 'colander', 'tokenlib', 'cryptacular'],
     entry_points = """\
     [paste.app_factory]
     main = api:main

@@ -1,0 +1,479 @@
+2014-06-11 22:24:45,701 INFO  [requests.packages.urllib3.connectionpool][Dummy-11] Starting new HTTP connection (1): theironislands.f.getqujing.net
+2014-06-11 23:34:55,769 INFO  [requests.packages.urllib3.connectionpool][Dummy-8] Starting new HTTP connection (1): theironislands.f.getqujing.net
+2014-06-13 00:51:59,671 INFO  [requests.packages.urllib3.connectionpool][Dummy-9] Starting new HTTP connection (1): theironislands.f.getqujing.net
+2014-06-13 00:53:32,288 ERROR [api.views.v0d1d0#product#][Dummy-11] validate product failed: unbound method deserialize() must be called with MoneyInt instance as first argument (got SchemaNode instance instead)
+2014-06-13 00:53:32,288 ERROR [api.views.v0d1d0#product#][Dummy-11] validate product failed: unbound method deserialize() must be called with MoneyInt instance as first argument (got SchemaNode instance instead)
+2014-06-13 00:53:32,295 ERROR [api.views.v0d1d0#product#][Dummy-10] validate product failed: unbound method deserialize() must be called with MoneyInt instance as first argument (got SchemaNode instance instead)
+2014-06-13 00:53:32,298 ERROR [api.views.v0d1d0#product#][Dummy-8] validate product failed: unbound method deserialize() must be called with MoneyInt instance as first argument (got SchemaNode instance instead)
+2014-06-13 00:53:32,295 ERROR [api.views.v0d1d0#product#][Dummy-10] validate product failed: unbound method deserialize() must be called with MoneyInt instance as first argument (got SchemaNode instance instead)
+2014-06-13 00:53:32,298 ERROR [api.views.v0d1d0#product#][Dummy-8] validate product failed: unbound method deserialize() must be called with MoneyInt instance as first argument (got SchemaNode instance instead)
+2014-06-13 00:58:26,981 INFO  [requests.packages.urllib3.connectionpool][Dummy-9] Starting new HTTP connection (1): theironislands.f.getqujing.net
+2014-06-13 01:07:57,046 ERROR [waitress][Dummy-9] Exception when serving /v0.1.0/productMasters
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 165, in get_all_product_master
+    pro = convert_price(pro)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 58, in convert_price
+    model_object['price'] = "{0:.2f}".format(str(model_object['price'] / 100) + '.' + str(model_object['price'] % 100))
+ValueError: Unknown format code 'f' for object of type 'str'
+2014-06-13 01:07:57,955 ERROR [waitress][Dummy-10] Exception when serving /v0.1.0/productMasters
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 165, in get_all_product_master
+    pro = convert_price(pro)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 58, in convert_price
+    model_object['price'] = "{0:.2f}".format(str(model_object['price'] / 100) + '.' + str(model_object['price'] % 100))
+ValueError: Unknown format code 'f' for object of type 'str'
+2014-06-13 01:08:08,045 ERROR [waitress][Dummy-8] Exception when serving /v0.1.0/productMasters
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 165, in get_all_product_master
+    pro = convert_price(pro)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 58, in convert_price
+    model_object['price'] = "{0:.2f}".format(str(model_object['price'] / 100) + '.' + str(model_object['price'] % 100))
+ValueError: Unknown format code 'f' for object of type 'str'
+2014-06-13 01:08:34,134 ERROR [waitress][Dummy-10] Exception when serving /v0.1.0/productMasters
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 165, in get_all_product_master
+    pro = convert_price(pro)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 58, in convert_price
+    model_object['price'] = "{0:.2f}".format(str(model_object['price'] / 100) + '.' + str(model_object['price'] % 100))
+ValueError: Unknown format code 'f' for object of type 'str'
+2014-06-13 01:10:51,478 ERROR [waitress][Dummy-9] Exception when serving /v0.1.0/productMasters
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 165, in get_all_product_master
+    pro = convert_price(pro)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 58, in convert_price
+    model_object['price'] = str(model_object['price'] / 100) + "{0:.2f}".format('.' + str(model_object['price'] % 100))
+ValueError: Unknown format code 'f' for object of type 'str'
+2014-06-13 01:12:41,700 ERROR [waitress][Dummy-8] Exception when serving /v0.1.0/productMasters
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 166, in get_all_product_master
+    pro = convert_price(pro)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 59, in convert_price
+    model_object['price'] = "{0:.2f}".format(temp)
+ValueError: Unknown format code 'f' for object of type 'str'
+2014-06-13 18:00:45,816 INFO  [requests.packages.urllib3.connectionpool][Dummy-9] Starting new HTTP connection (1): theironislands.f.getqujing.net
+2014-06-14 22:22:36,996 ERROR [waitress][Dummy-11] Exception when serving /v0.1.0/clients
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 461, in new_client
+    mobile = request.json_body['mobile']
+KeyError: 'mobile'
+2014-06-18 18:45:29,647 ERROR [waitress][Dummy-10] Exception when serving /v0.1.0/deliveryAddresses
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 528, in add_address
+    new_address = request.validated['delivery_address']
+KeyError: 'delivery_address'
+2014-06-18 18:45:29,652 ERROR [waitress][Dummy-11] Exception when serving /v0.1.0/deliveryAddresses
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 528, in add_address
+    new_address = request.validated['delivery_address']
+KeyError: 'delivery_address'
+2014-06-19 16:09:32,513 ERROR [waitress][Dummy-8] Exception when serving /v0.1.0/clients
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 526, in get_all_clients
+    client_list.append({'id': str(_client('_id')),
+TypeError: 'dict' object is not callable
+2014-06-19 16:09:34,545 ERROR [waitress][Dummy-9] Exception when serving /v0.1.0/clients
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 526, in get_all_clients
+    client_list.append({'id': str(_client('_id')),
+TypeError: 'dict' object is not callable
+2014-06-19 16:10:36,768 ERROR [waitress][Dummy-8] Exception when serving /v0.1.0/clients
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 526, in get_all_clients
+    client_list.append({'id': str(_client('_id')),
+TypeError: 'dict' object is not callable
+2014-06-19 16:11:17,733 ERROR [waitress][Dummy-9] Exception when serving /v0.1.0/clients
+Traceback (most recent call last):
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/channel.py", line 337, in service
+    task.service()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 173, in service
+    self.execute()
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/waitress-0.8.9-py2.7.egg/waitress/task.py", line 392, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 242, in __call__
+    response = self.invoke_subrequest(request, use_tweens=True)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 217, in invoke_subrequest
+    response = handle_request(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 385, in viewresult_to_response
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/pyramid-1.5.1-py2.7.egg/pyramid/config/views.py", line 501, in _requestonly_view
+    response = view(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/eggs/cornice-0.16.2-py2.7.egg/cornice/service.py", line 514, in wrapper
+    response = view_(request)
+  File "/Users/binlei/dev/no/keptrans/keptrans-api/api/api/views/v0d1d0.py", line 526, in get_all_clients
+    client_list.append({'id': str(_client('_id')),
+TypeError: 'dict' object is not callable
+2014-06-19 17:20:02,632 INFO  [requests.packages.urllib3.connectionpool][Dummy-9] Starting new HTTP connection (1): theironislands.f.getqujing.net
