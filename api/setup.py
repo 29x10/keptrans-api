@@ -9,6 +9,8 @@ with open(os.path.join(here, 'README.rst')) as f:
     README = f.read()
 
 
+
+
 setup(name='api',
     version=0.1,
     description='api',
@@ -26,7 +28,16 @@ setup(name='api',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['cornice', 'waitress', 'pymongo', 'upyun', 'requests', 'colander', 'tokenlib', 'cryptacular'],
+    install_requires=['cornice',
+                      'waitress',
+                      'pymongo',
+                      'upyun',
+                      'requests',
+                      'colander',
+                      'tokenlib',
+                      'cryptacular',
+                      'gunicorn',
+                      'gevent'],
     entry_points = """\
     [paste.app_factory]
     main = api:main

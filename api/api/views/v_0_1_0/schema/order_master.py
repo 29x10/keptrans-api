@@ -1,25 +1,24 @@
 # coding:utf-8
+from api.views.v_0_1_0.schema import MoneyInt
 import colander
 
 
-class Order(colander.SequenceSchema):
-    id = colander.SchemaNode(colander.String())
-
-
 class OrderMasterSchema(colander.MappingSchema):
-    orderStatus = colander.SchemaNode(colander.Integer())
+    status = colander.SchemaNode(colander.Integer())
+    total = colander.SchemaNode(MoneyInt())
+    memo = colander.SchemaNode(colander.String(), missing="")
 
     company = colander.SchemaNode(colander.String())
-    address = colander.SchemaNode(colander.String())
-    bank = colander.SchemaNode(colander.String())
-    bankAccount = colander.SchemaNode(colander.String())
-    tax = colander.SchemaNode(colander.String())
 
-    legalPerson = colander.SchemaNode(colander.String())
-    phone = colander.SchemaNode(colander.String())
-    fax = colander.SchemaNode(colander.String())
+    address = colander.SchemaNode(colander.String(), missing="")
+    bank = colander.SchemaNode(colander.String(), missing="")
+    bankAccount = colander.SchemaNode(colander.String(), missing="")
+    tax = colander.SchemaNode(colander.String(), missing="")
 
-    deliveryAddress = colander.SchemaNode(colander.String())
+    legalPerson = colander.SchemaNode(colander.String(), missing="")
+    phone = colander.SchemaNode(colander.String(), missing="")
+    fax = colander.SchemaNode(colander.String(), missing="")
 
-    orders = Order()
+    deliveryAddress = colander.SchemaNode(colander.String(), missing="")
+
     client = colander.SchemaNode(colander.String())

@@ -11,9 +11,9 @@ def convert_datetime(model_object):
     return model_object
 
 
-def convert_price(model_object):
-    model_object['price'] = "{0:.2f}".format(model_object['price'] / 100.0)
-    return model_object
+def convert_price(price_int):
+    price_float = "{0:.2f}".format(price_int / 100.0)
+    return price_float
 
 
 class UnauthorizedView(exc.HTTPError):

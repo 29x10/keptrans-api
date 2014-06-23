@@ -14,6 +14,7 @@ def add_couchdb_to_request(event):
     settings = request.registry.settings
     event.request.db = settings['mongodb.db']
     event.request.up = settings['UpYun.server']
+    event.request.updebug = settings['UpYun.debug']
 
 
 def get_user_groups(username, request):
@@ -34,6 +35,7 @@ def main(global_config, **settings):
     config.registry.settings['mongodb.db'] = client[settings['mongodb.name']]
     upyun_server = UpYun(settings['upyun.space'], settings['upyun.username'], settings['upyun.password'], timeout=30, endpoint=ED_AUTO)
     config.registry.settings['UpYun.server'] = upyun_server
+    config.registry.settings['UpYun.debug'] = settings['upyun.debug']
     config.add_subscriber(add_couchdb_to_request, NewRequest)
     DEFAULT_FILTERS.pop()
     config.include("cornice")

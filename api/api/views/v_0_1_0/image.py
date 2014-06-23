@@ -11,8 +11,12 @@ image = Service(name='image', path='/v0.1.0/image', description="upload image",
 @image.post()
 def upload_image(request):
     up = request.up
+    _debug = request.updebug == 'True'
     file = request.params.get('file')
     file_ext = '.' + file.type.split('/')[-1]
-    image_url = '/products/' + uuid4().hex + file_ext
+    if _debug:
+        image_url = '/test/products/' + uuid4().hex + file_ext
+    else:
+        image_url = '/products/' + uuid4().hex + file_ext
     up.put(image_url, file.file, checksum=True)
     return {'image': 'https://keptrans.b0.upaiyun.com' + image_url}

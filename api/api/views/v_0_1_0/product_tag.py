@@ -10,6 +10,7 @@ product_tags = Service(name='products_tags', path='/v0.1.0/productTags', descrip
 
 logger = logging.getLogger(__name__)
 
+
 def validate_product_tag(request):
     try:
         schema = ProductTagSchema()

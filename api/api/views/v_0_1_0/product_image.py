@@ -68,5 +68,3 @@ def delete_product_image(request):
     db = request.db
     db['product_image'].remove({"_id": image_oid})
     return {}
-
-

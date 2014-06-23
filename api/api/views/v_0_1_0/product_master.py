@@ -14,16 +14,18 @@ product_masters = Service(name='product_masters', path='/v0.1.0/productMasters',
 product_master = Service(name='product_master', path='/v0.1.0/productMasters/{master_id}', description="product master",
                          cors_origins=('https://admin.keptrans.com', 'https://keptrans.com'))
 
+logger = logging.getLogger(__name__)
+
 
 product_master_error = {
     'brandNone': u'品牌不能为空',
     'categoryNone': u'所属类目不能为空',
     'coverNone': u'封面地址不能为空',
     'descNone': u'描述不能为空',
-    'tags': u'标签不能为空'
+    'tagsNone': u'标签不能为空'
 }
 
-logger = logging.getLogger(__name__)
+
 
 
 def validate_product_master(request):
@@ -78,14 +80,14 @@ def get_all_product_master(request):
             tags_list.append(tag)
         master['tags'] = tag_id_list
         product_id_list = []
-        for pro in db['product'].find({'productMaster.$id': master['_id']}):
-            pro['id'] = str(pro['_id'])
-            del pro['_id']
-            del pro['productMaster']
-            product_id_list.append(pro['id'])
-            pro = convert_datetime(pro)
-            pro = convert_price(pro)
-            products_list.append(pro)
+        for _product in db['product'].find({'productMaster.$id': master['_id']}):
+            _product['id'] = str(_product['_id'])
+            del _product['_id']
+            del _product['productMaster']
+            product_id_list.append(_product['id'])
+            _product = convert_datetime(_product)
+            _product['price'] = convert_price(_product['price'])
+            products_list.append(_product)
         master['products'] = product_id_list
         image_id_list = []
         for img in db['product_image'].find({'productMaster.$id': master['_id']}):
@@ -118,10 +120,10 @@ def update_product_master(request):
 
     result['products'] = []
     result['images'] = []
-    for pro in db['product'].find({'productMaster.$id': result['_id']}):
-        result['products'].append(str(pro['_id']))
-    for img in db['product_image'].find({'productMaster.$id': result['_id']}):
-        result['images'].append(str(img['_id']))
+    for _product in db['product'].find({'productMaster.$id': result['_id']}):
+        result['products'].append(str(_product['_id']))
+    for _image in db['product_image'].find({'productMaster.$id': result['_id']}):
+        result['images'].append(str(_image['_id']))
 
     result['id'] = str(result['_id'])
     del result['_id']

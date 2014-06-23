@@ -61,7 +61,7 @@ def add_product(request):
     new_product['id'] = str(new_product['_id'])
     del new_product['_id']
     new_product = convert_datetime(new_product)
-    new_product = convert_price(new_product)
+    new_product['price'] = convert_price(new_product['price'])
     return {'product': new_product}
 
 
@@ -72,14 +72,14 @@ def get_all_products(request):
     product_list = []
     product_master_list = []
 
-    for pro in db['product'].find():
-        master_relevant = db.dereference(pro['productMaster'])
-        pro['productMaster'] = str(pro['productMaster'].id)
-        pro['id'] = str(pro['_id'])
-        del pro['_id']
-        pro = convert_datetime(pro)
-        pro = convert_price(pro)
-        product_list.append(pro)
+    for _product in db['product'].find():
+        master_relevant = db.dereference(_product['productMaster'])
+        _product['productMaster'] = str(_product['productMaster'].id)
+        _product['id'] = str(_product['_id'])
+        del _product['_id']
+        _product = convert_datetime(_product)
+        _product['price'] = convert_price(_product['price'])
+        product_list.append(_product)
         del master_relevant['tags']
         master_relevant['id'] = str(master_relevant['_id'])
         del master_relevant['_id']
@@ -100,7 +100,7 @@ def update_product(request):
     result['id'] = str(result['_id'])
     del result['_id']
     result = convert_datetime(result)
-    result = convert_price(result)
+    result['price'] = convert_price(result['price'])
     return {'product': result}
 
 
