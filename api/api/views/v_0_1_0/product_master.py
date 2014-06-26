@@ -70,14 +70,16 @@ def get_all_product_master(request):
 
     master_list = []
 
+    for _tag in db['product_tag'].find():
+        _tag['id'] = str(_tag['_id'])
+        del _tag['_id']
+        tags_list.append(_tag)
+
     for master in db['product_master'].find():
         tag_id_list = []
         for tag in master['tags']:
             tag = db.dereference(tag)
-            tag['id'] = str(tag['_id'])
-            del tag['_id']
-            tag_id_list.append(tag['id'])
-            tags_list.append(tag)
+            tag_id_list.append(str(tag['_id']))
         master['tags'] = tag_id_list
         product_id_list = []
         for _product in db['product'].find({'productMaster.$id': master['_id']}):
