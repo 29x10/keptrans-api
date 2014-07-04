@@ -8,7 +8,7 @@ class OrderMasterSchema(colander.MappingSchema):
     total = colander.SchemaNode(MoneyInt())
     memo = colander.SchemaNode(colander.String(), missing="")
 
-    company = colander.SchemaNode(colander.String())
+    company = colander.SchemaNode(colander.String(), missing="")
 
     address = colander.SchemaNode(colander.String(), missing="")
     bank = colander.SchemaNode(colander.String(), missing="")

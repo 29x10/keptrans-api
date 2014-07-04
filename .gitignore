@@ -10,4 +10,4 @@ eggs/
 parts/
 .installed.cfg
 
-api/api/log/
+api/api/log/*
