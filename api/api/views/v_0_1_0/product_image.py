@@ -37,6 +37,11 @@ def validate_product_image(request):
         request.errors.add('body', 'unhandled_error', e.message)
 
 
+@product_images.get()
+def get_all_images(request):
+    a = 1
+
+
 @product_images.post(content_type="application/json", validators=(validate_product_image,))
 def add_product_image(request):
     new_image = request.validated['image']

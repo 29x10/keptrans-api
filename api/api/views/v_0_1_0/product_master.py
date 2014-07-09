@@ -107,6 +107,39 @@ def get_all_product_master(request):
             'products': products_list}
 
 
+@product_master.get()
+def update_product_master(request):
+    master_id = ObjectId(request.matchdict['master_id'])
+
+    db = request.db
+
+    _master = db['product_master'].find_one({'_id': master_id})
+
+    tag_id_list = []
+    for tag in _master['tags']:
+        tag = db.dereference(tag)
+        tag_id_list.append(str(tag['_id']))
+    _master['tags'] = tag_id_list
+
+    product_id_list = []
+
+    for _product in db['product'].find({'productMaster.$id': _master['_id']}):
+        product_id_list.append(str(_product['_id']))
+
+    _master['products'] = product_id_list
+
+    image_id_list = []
+    for _image in db['product_image'].find({'productMaster.$id': _master['_id']}):
+        image_id_list.append(str(_image['_id']))
+
+    _master['images'] = image_id_list
+    _master['id'] = str(_master['_id'])
+    del _master['_id']
+    _master = convert_datetime(_master)
+
+    return {'productMaster': _master}
+
+
 @product_master.put(content_type="application/json", validators=(validate_product_master,))
 def update_product_master(request):
     master_id = ObjectId(request.matchdict['master_id'])

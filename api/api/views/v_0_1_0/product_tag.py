@@ -27,6 +27,19 @@ def validate_product_tag(request):
         request.errors.add('body', 'unhandled_error', e.message)
 
 
+@product_tags.get()
+def get_all_tags(request):
+    db = request.db
+    if request.GET:
+        tag_id_list = [tag_id for _, tag_id in request.GET.items()]
+        for _tag in db['product_tag'].find({'_id': {'$in': tag_id_list}}):
+            pass
+    else:
+        pass
+    return {'tags': []}
+
+
+
 @product_tags.post(content_type="application/json", validators=(validate_product_tag,))
 def add_tag(request):
     new_tag = request.validated['tag']
