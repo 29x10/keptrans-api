@@ -1,7 +1,8 @@
 # coding:utf-8
 from datetime import datetime
 import logging
-from api.views.v_0_1_0 import convert_datetime, convert_price
+from api.views.v_0_1_0 import convert_datetime, convert_price, get_id_from_ref, PRODUCT_COLLECTION, \
+    PRODUCT_IMAGE_COLLECTION, PRODUCT_MASTER_COLLECTION
 from api.views.v_0_1_0.schema.product_master import ProductMasterSchema
 from bson.dbref import DBRef
 from bson.objectid import ObjectId
@@ -61,81 +62,66 @@ def add_product_master(request):
     return {'productMaster': new_product_master}
 
 
+
+
+
+def generate_master_item(db, _master):
+    #标签ID列表
+    _master['tags'] = map(get_id_from_ref, _master['tags'])
+
+    #产品ID列表
+    product_id_list = []
+    for _product in db[PRODUCT_COLLECTION].find({'productMaster.$id': _master['_id']}):
+        product_id_list.append(str(_product['_id']))
+    _master['products'] = product_id_list
+
+    #产品图片列表
+    image_id_list = []
+    for _image in db[PRODUCT_IMAGE_COLLECTION].find({'productMaster.$id': _master['_id']}):
+        image_id_list.append(str(_image['_id']))
+    _master['images'] = image_id_list
+
+    #ID变换
+    _master['id'] = str(_master['_id'])
+    del _master['_id']
+
+    #变更时间
+    _master = convert_datetime(_master)
+    return _master
+
+
 @product_masters.get()
 def get_all_product_master(request):
     db = request.db
-    tags_list = []
-    products_list = []
-    images_list = []
-
     master_list = []
 
-    for _tag in db['product_tag'].find():
-        _tag['id'] = str(_tag['_id'])
-        del _tag['_id']
-        tags_list.append(_tag)
+    if request.GET:
+        master_id_list = [ObjectId(master_id) for _, master_id in request.GET.items()]
+        for _master in db[PRODUCT_MASTER_COLLECTION].find({'_id': {'$in': master_id_list}}):
+            #转变master
+            _master = generate_master_item(db, _master)
 
-    for master in db['product_master'].find():
-        tag_id_list = []
-        for tag in master['tags']:
-            tag = db.dereference(tag)
-            tag_id_list.append(str(tag['_id']))
-        master['tags'] = tag_id_list
-        product_id_list = []
-        for _product in db['product'].find({'productMaster.$id': master['_id']}):
-            _product['id'] = str(_product['_id'])
-            del _product['_id']
-            del _product['productMaster']
-            product_id_list.append(_product['id'])
-            _product = convert_datetime(_product)
-            _product['price'] = convert_price(_product['price'])
-            products_list.append(_product)
-        master['products'] = product_id_list
-        image_id_list = []
-        for img in db['product_image'].find({'productMaster.$id': master['_id']}):
-            img['id'] = str(img['_id'])
-            del img['_id']
-            del img['productMaster']
-            image_id_list.append(img['id'])
-            images_list.append(img)
-        master['images'] = image_id_list
-        master['id'] = str(master['_id'])
-        del master['_id']
-        master = convert_datetime(master)
-        master_list.append(master)
-    return {'productMasters': master_list, 'productTags': tags_list, 'productImages': images_list,
-            'products': products_list}
+            #加入列表
+            master_list.append(_master)
+    else:
+        for _master in db[PRODUCT_MASTER_COLLECTION].find():
+            #转变master
+            _master = generate_master_item(db, _master)
+
+            #加入列表
+            master_list.append(_master)
+    return {'productMasters': master_list}
 
 
 @product_master.get()
-def update_product_master(request):
+def get_product_master(request):
     master_id = ObjectId(request.matchdict['master_id'])
-
     db = request.db
 
-    _master = db['product_master'].find_one({'_id': master_id})
+    _master = db[PRODUCT_MASTER_COLLECTION].find_one({'_id': master_id})
 
-    tag_id_list = []
-    for tag in _master['tags']:
-        tag = db.dereference(tag)
-        tag_id_list.append(str(tag['_id']))
-    _master['tags'] = tag_id_list
-
-    product_id_list = []
-
-    for _product in db['product'].find({'productMaster.$id': _master['_id']}):
-        product_id_list.append(str(_product['_id']))
-
-    _master['products'] = product_id_list
-
-    image_id_list = []
-    for _image in db['product_image'].find({'productMaster.$id': _master['_id']}):
-        image_id_list.append(str(_image['_id']))
-
-    _master['images'] = image_id_list
-    _master['id'] = str(_master['_id'])
-    del _master['_id']
-    _master = convert_datetime(_master)
+    #master转换
+    _master = generate_master_item(db, _master)
 
     return {'productMaster': _master}
 

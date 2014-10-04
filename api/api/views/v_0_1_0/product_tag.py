@@ -1,6 +1,8 @@
 # coding:utf-8
 import logging
+from api.views.v_0_1_0 import PRODUCT_TAG_COLLECTION
 from api.views.v_0_1_0.schema.product_tag import ProductTagSchema
+from bson.objectid import ObjectId
 import colander
 from cornice.service import Service
 
@@ -26,17 +28,36 @@ def validate_product_tag(request):
     except Exception as e:
         request.errors.add('body', 'unhandled_error', e.message)
 
+def generate_tag_item(db, _tag):
+
+    _tag['id'] = str(_tag['_id'])
+    del _tag['_id']
+
+    return _tag
+
 
 @product_tags.get()
 def get_all_tags(request):
     db = request.db
+
+    tag_list = []
+
     if request.GET:
-        tag_id_list = [tag_id for _, tag_id in request.GET.items()]
-        for _tag in db['product_tag'].find({'_id': {'$in': tag_id_list}}):
-            pass
+        tag_id_list = [ObjectId(tag_id) for _, tag_id in request.GET.items()]
+        for _tag in db[PRODUCT_TAG_COLLECTION].find({'_id': {'$in': tag_id_list}}):
+            #转变image
+            _tag = generate_tag_item(db, _tag)
+
+            #加入列表
+            tag_list.append(_tag)
     else:
-        pass
-    return {'tags': []}
+        for _tag in db[PRODUCT_TAG_COLLECTION].find():
+            #转变image
+            _tag = generate_tag_item(db, _tag)
+
+            #加入列表
+            tag_list.append(_tag)
+    return {'productTags': tag_list}
 
 
 

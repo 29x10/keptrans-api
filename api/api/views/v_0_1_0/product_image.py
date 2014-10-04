@@ -1,5 +1,6 @@
 # coding:utf-8
 import logging
+from api.views.v_0_1_0 import PRODUCT_IMAGE_COLLECTION
 from api.views.v_0_1_0.schema.product_image import ProductImageSchema
 from bson.dbref import DBRef
 from bson.objectid import ObjectId
@@ -35,11 +36,53 @@ def validate_product_image(request):
                 request.errors.add('body', error_name, u'发生未知错误')
     except Exception as e:
         request.errors.add('body', 'unhandled_error', e.message)
+        
+
+def generate_image_item(db, _image):
+    _image['productMaster'] = str(_image['productMaster'].id)
+
+    _image['id'] = str(_image['_id'])
+    del _image['_id']
+
+    return _image
 
 
 @product_images.get()
 def get_all_images(request):
-    a = 1
+    db = request.db
+
+    image_list = []
+
+    if request.GET:
+        image_id_list = [ObjectId(image_id) for _, image_id in request.GET.items()]
+        for _image in db[PRODUCT_IMAGE_COLLECTION].find({'_id': {'$in': image_id_list}}):
+            #转变image
+            _image = generate_image_item(db, _image)
+
+            #加入列表
+            image_list.append(_image)
+    else:
+        for _image in db[PRODUCT_IMAGE_COLLECTION].find():
+            #转变image
+            _image = generate_image_item(db, _image)
+
+            #加入列表
+            image_list.append(_image)
+    return {'productImages': image_list}
+
+
+@product_image.get()
+def get_image(request):
+    image_id = ObjectId(request.matchdict['image_id'])
+    db = request.db
+
+    _image = db[PRODUCT_IMAGE_COLLECTION].find_one({'_id': image_id})
+
+    #image转换
+    _image = generate_image_item(db, _image)
+
+    return {'productImage': _image}
+
 
 
 @product_images.post(content_type="application/json", validators=(validate_product_image,))

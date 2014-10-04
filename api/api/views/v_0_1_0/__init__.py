@@ -16,6 +16,17 @@ def convert_price(price_int):
     return price_float
 
 
+def get_id_from_ref(source):
+    return str(source.id)
+
+
+PRODUCT_MASTER_COLLECTION = 'product_master'
+PRODUCT_COLLECTION = 'product'
+PRODUCT_IMAGE_COLLECTION = 'product_image'
+PRODUCT_TAG_COLLECTION = 'product_tag'
+
+
+
 class UnauthorizedView(exc.HTTPError):
     def __init__(self, msg=u'Unauthorized'):
         body = {'status': 401, 'message': msg}

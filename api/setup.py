@@ -37,7 +37,8 @@ setup(name='api',
                       'tokenlib',
                       'cryptacular',
                       'gunicorn',
-                      'gevent'],
+                      'gevent',
+                      'pyramid_beaker'],
     entry_points = """\
     [paste.app_factory]
     main = api:main

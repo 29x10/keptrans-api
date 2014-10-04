@@ -1,7 +1,7 @@
 # coding:utf-8
 from datetime import datetime
 import logging
-from api.views.v_0_1_0 import convert_datetime, convert_price
+from api.views.v_0_1_0 import convert_datetime, convert_price, PRODUCT_COLLECTION
 from api.views.v_0_1_0.schema.product import ProductSchema
 from bson.dbref import DBRef
 from bson.objectid import ObjectId
@@ -65,27 +65,51 @@ def add_product(request):
     return {'product': new_product}
 
 
+def generate_product_item(db, _product):
+    _product['productMaster'] = str(_product['productMaster'].id)
+
+    _product['id'] = str(_product['_id'])
+    del _product['_id']
+
+    _product = convert_datetime(_product)
+    _product['price'] = convert_price(_product['price'])
+
+    return _product
+
 @products.get()
 def get_all_products(request):
     db = request.db
 
     product_list = []
-    product_master_list = []
 
-    for _product in db['product'].find():
-        master_relevant = db.dereference(_product['productMaster'])
-        _product['productMaster'] = str(_product['productMaster'].id)
-        _product['id'] = str(_product['_id'])
-        del _product['_id']
-        _product = convert_datetime(_product)
-        _product['price'] = convert_price(_product['price'])
-        product_list.append(_product)
-        del master_relevant['tags']
-        master_relevant['id'] = str(master_relevant['_id'])
-        del master_relevant['_id']
-        master_relevant = convert_datetime(master_relevant)
-        product_master_list.append(master_relevant)
-    return {'products': product_list, 'productMasters': product_master_list}
+    if request.GET:
+        product_id_list = [ObjectId(product_id) for _, product_id in request.GET.items()]
+        for _product in db[PRODUCT_COLLECTION].find({'_id': {'$in': product_id_list}}):
+            #转变product
+            _product = generate_product_item(db, _product)
+
+            #加入列表
+            product_list.append(_product)
+    else:
+        for _product in db[PRODUCT_COLLECTION].find():
+            #转变product
+            _product = generate_product_item(db, _product)
+
+            #加入列表
+            product_list.append(_product)
+    return {'products': product_list}
+
+@product.get()
+def get_product(request):
+    product_id = ObjectId(request.matchdict['product_id'])
+    db = request.db
+
+    _product = db[PRODUCT_COLLECTION].find_one({'_id': product_id})
+
+    #product转换
+    _product = generate_product_item(db, _product)
+
+    return {'product': _product}
 
 
 @product.put(content_type="application/json", validators=(validate_product,))
